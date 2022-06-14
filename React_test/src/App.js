@@ -38,8 +38,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <DiaryEditor oncreate={onCreate} />
-      <DiaryList onEidt={onEdit} onRemove={onRemove} diaryList={data} />
+      <DiaryEditor onCreate={onCreate} />
+      <DiaryList onEdit={onEdit} onRemove={onRemove} diaryList={data} />
     </div>
   );
 };
