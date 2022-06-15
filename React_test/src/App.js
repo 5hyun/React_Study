@@ -7,6 +7,32 @@ const App = () => {
   const [data, setData] = useState([]); //글을 저장한다.
   const dataId = useRef(0); //각 일기에 아이디를 주기 위한 변수
 
+  //async는 항상 Promise만 반환한다.
+  const getData = async () => {
+    //await은 async 안에서만 사용 가능하고 이 코드가 완료될 때 까지 기다린다.
+    const res = await fetch(
+      "https://jsonplaceholder.typicode.com/comments"
+      //밑에 then은 성공적 처리만 한다.
+    ).then((res) => res.json());
+
+    const initData = res.slice(0, 20).map((it) => {
+      return {
+        author: it.email,
+        content: it.body,
+        emotion: Math.floor(Math.random() * 5) + 1,
+        created_date: new Date().getTime() + 1,
+        id: dataId.current++,
+      };
+    });
+    setData(initData);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      getData();
+    }, 1500);
+  }, []);
+
   const onCreate = (author, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
